@@ -3,10 +3,10 @@ package monkeylang_test
 import (
 	"testing"
 
+	"github.com/czernous/monkeylang-go/internal/evaluator"
 	"github.com/czernous/monkeylang-go/internal/lexer"
 	"github.com/czernous/monkeylang-go/internal/object"
 	"github.com/czernous/monkeylang-go/internal/parser"
-	"github.com/czernous/monkeylang-go/internal/evaluator"
 )
 
 func TestEvalIntegerExpression(t *testing.T) {
@@ -49,3 +49,18 @@ func testIntegerObject(t *testing.T, obj object.Object, expected int64) bool {
 	return true
 }
 
+func testBooleanObject(t *testing.T, obj object.Object, expected bool) bool {
+	result, ok := obj.(*object.Boolean)
+
+	if !ok {
+		t.Errorf("object is not Boolean, got=%T (%+v)", obj, obj)
+		return false
+	}
+
+	if result.Value != expected {
+		t.Errorf("object has wrong value, got=%t, want=%t", result.Value, expected)
+		return false
+	}
+
+	return true
+}
